@@ -27,14 +27,15 @@ RUN chown -R 1000.1000 /run && \
   chown -R 1000.1000 /var/tmp/nginx && \
   chown -R 1000.1000 /var/log && \
   chown -R 1000.1000 /var/www/html && \
-  chown -R $USER $HOME/.composer
+
 
 # Switch to use a non-root user from here on
 USER 1000:1000
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=1000 ./ /var/www/html
+COPY --chown=1000 ./ /var/www/html && \
+chown -R $USER $HOME/.composer
 
 #set home
 RUN HOME=/var/www/html
