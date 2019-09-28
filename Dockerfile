@@ -37,8 +37,6 @@ COPY --chown=docker ./ /var/www/html
 #set home
 RUN HOME=/var/www/html
 
-RUN chown -R docker.docker $HOME/.composer
-
 # Expose the port nginx is reachable on
 EXPOSE 8080
 
