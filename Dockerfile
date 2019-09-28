@@ -1,6 +1,5 @@
 FROM alpine:3.9
 LABEL maintainer="Jehan<jee.archer@gmail.com>"
-RUN addgroup -S nobody && adduser -S nobody -G nobody
 
 # Install packages
 RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-curl \
