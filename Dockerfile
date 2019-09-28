@@ -1,6 +1,6 @@
 FROM alpine:3.9
 LABEL maintainer="Jehan<jee.archer@gmail.com>"
-RUN addgroup -S docker && adduser -S docker -G docker
+RUN addgroup -S nobody && adduser -S nobody -G nobody
 
 # Install packages
 RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-curl \
@@ -17,22 +17,22 @@ COPY config/php.ini /etc/php7/conf.d/zzz_custom.ini
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Setup document docker
+# Setup document nobody
 RUN mkdir -p /var/www/html
 
-# Make sure files/folders needed by the processes are accessable when they run under the docker user
-RUN chown -R docker.docker /run && \
-  chown -R docker.docker /var/lib/nginx && \
-  chown -R docker.docker /var/tmp/nginx && \
-  chown -R docker.docker /var/log && \
-  chown -R docker.docker /var/www/html 
+# Make sure files/folders needed by the processes are accessable when they run under the nobody user
+RUN chown -R nobody.nobody /run && \
+  chown -R nobody.nobody /var/lib/nginx && \
+  chown -R nobody.nobody /var/tmp/nginx && \
+  chown -R nobody.nobody /var/log && \
+  chown -R nobody.nobody /var/www/html 
 
 # Switch to use a non-root user from here on
-USER docker
+USER nobody
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=docker ./ /var/www/html 
+COPY --chown=nobody ./ /var/www/html 
 
 #set home
 RUN HOME=/var/www/html
