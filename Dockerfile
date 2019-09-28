@@ -32,7 +32,7 @@ USER docker
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=docker.docker ./ /var/www/html 
+COPY --chown=docker ./ /var/www/html 
 
 #set home
 RUN HOME=/var/www/html
