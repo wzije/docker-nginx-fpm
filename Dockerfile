@@ -16,27 +16,27 @@ COPY config/php.ini /etc/php7/conf.d/zzz_custom.ini
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Setup document 1000
+# Setup document www-data
 RUN mkdir -p /var/www/html
 
-# Make sure files/folders needed by the processes are accessable when they run under the 1000 user
-RUN chown -R 1000.1000 /run && \
-  chown -R 1000.1000 /var/lib/nginx && \
-  chown -R 1000.1000 /var/tmp/nginx && \
-  chown -R 1000.1000 /var/log && \
-  chown -R 1000.1000 /var/www/html 
+# Make sure files/folders needed by the processes are accessable when they run under the www-data user
+RUN chown -R www-data.www-data /run && \
+  chown -R www-data.www-data /var/lib/nginx && \
+  chown -R www-data.www-data /var/tmp/nginx && \
+  chown -R www-data.www-data /var/log && \
+  chown -R www-data.www-data /var/www/html 
 
 # Switch to use a non-root user from here on
-USER 1000
+USER www-data
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=1000.1000 ./ /var/www/html 
+COPY --chown=www-data.www-data ./ /var/www/html 
 
 #set home
 RUN HOME=/var/www/html
 
-RUN chown -R 1000.1000 $HOME/.composer
+RUN chown -R www-data.www-data $HOME/.composer
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
