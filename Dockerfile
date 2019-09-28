@@ -1,5 +1,4 @@
 FROM alpine:3.9
-
 LABEL maintainer="Jehan<jee.archer@gmail.com>"
 
 # Install packages
@@ -11,8 +10,7 @@ RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-cur
 # Configure nginx
 COPY config/nginx.conf /etc/nginx/nginx.conf
 
-# Configure PHP-FPM
-#COPY config/fpm-pool.conf /etc/php7/php-fpm.d/www.conf
+# Configure PHP-FPM COPY config/fpm-pool.conf /etc/php7/php-fpm.d/www.conf
 COPY config/php.ini /etc/php7/conf.d/zzz_custom.ini
 
 # Configure supervisord
@@ -26,18 +24,19 @@ RUN chown -R nobody.nobody /run && \
   chown -R nobody.nobody /var/lib/nginx && \
   chown -R nobody.nobody /var/tmp/nginx && \
   chown -R nobody.nobody /var/log && \
-  chown -R nobody.nobody /var/www/html && \
+  chown -R nobody.nobody /var/www/html 
 
 # Switch to use a non-root user from here on
-USER nobody:nobody
+USER nobody
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=nobody.nobody ./ /var/www/html && \
-chown -R nobody.nobody $HOME/.composer
+COPY --chown=nobody.nobody ./ /var/www/html 
 
 #set home
 RUN HOME=/var/www/html
+
+RUN chown -R nobody.nobody $HOME/.composer
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
