@@ -16,27 +16,27 @@ COPY config/php.ini /etc/php7/conf.d/zzz_custom.ini
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Setup document nobody
+# Setup document 1000
 RUN mkdir -p /var/www/html
 
-# Make sure files/folders needed by the processes are accessable when they run under the nobody user
-RUN chown -R nobody.nobody /run && \
-  chown -R nobody.nobody /var/lib/nginx && \
-  chown -R nobody.nobody /var/tmp/nginx && \
-  chown -R nobody.nobody /var/log && \
-  chown -R nobody.nobody /var/www/html 
+# Make sure files/folders needed by the processes are accessable when they run under the 1000 user
+RUN chown -R 1000.1000 /run && \
+  chown -R 1000.1000 /var/lib/nginx && \
+  chown -R 1000.1000 /var/tmp/nginx && \
+  chown -R 1000.1000 /var/log && \
+  chown -R 1000.1000 /var/www/html 
 
 # Switch to use a non-root user from here on
-USER nobody
+USER 1000
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=nobody.nobody ./ /var/www/html 
+COPY --chown=1000.1000 ./ /var/www/html 
 
 #set home
 RUN HOME=/var/www/html
 
-RUN chown -R nobody.nobody $HOME/.composer
+RUN chown -R 1000.1000 $HOME/.composer
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
