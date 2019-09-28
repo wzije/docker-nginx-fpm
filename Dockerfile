@@ -22,18 +22,18 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN mkdir -p /var/www/html
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
-RUN chown -R nobody.nobody /run && \
-  chown -R nobody.nobody /var/lib/nginx && \
-  chown -R nobody.nobody /var/tmp/nginx && \
-  chown -R nobody.nobody /var/log && \
-  chown -R nobody.nobody /var/www/html
+RUN chown -R 1000.1000 /run && \
+  chown -R 1000.1000 /var/lib/nginx && \
+  chown -R 1000.1000 /var/tmp/nginx && \
+  chown -R 1000.1000 /var/log && \
+  chown -R 1000.1000 /var/www/html
 
 # Switch to use a non-root user from here on
-USER nobody
+USER 1000:1000
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=nobody ./ /var/www/html
+COPY --chown=1000 ./ /var/www/html
 
 #set home
 RUN HOME=/var/www/html
