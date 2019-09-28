@@ -28,14 +28,13 @@ RUN chown -R nobody.nobody /run && \
   chown -R nobody.nobody /var/log && \
   chown -R nobody.nobody /var/www/html && \
 
-
 # Switch to use a non-root user from here on
 USER nobody:nobody
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=nobody ./ /var/www/html && \
-chown -R nobody $HOME/.composer
+COPY --chown=nobody.nobody ./ /var/www/html && \
+chown -R nobody.nobody $HOME/.composer
 
 #set home
 RUN HOME=/var/www/html
