@@ -35,7 +35,7 @@ USER nobody:nobody
 # Add application
 WORKDIR /var/www/html
 COPY --chown=nobody ./ /var/www/html && \
-chown -R $USER $HOME/.composer
+chown -R nobody $HOME/.composer
 
 #set home
 RUN HOME=/var/www/html
