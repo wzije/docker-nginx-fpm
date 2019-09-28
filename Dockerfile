@@ -1,5 +1,6 @@
 FROM alpine:3.9
 LABEL maintainer="Jehan<jee.archer@gmail.com>"
+RUN addgroup -S docker && adduser -S docker -G docker
 
 # Install packages
 RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-curl \
@@ -16,27 +17,27 @@ COPY config/php.ini /etc/php7/conf.d/zzz_custom.ini
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Setup document www-data
+# Setup document docker
 RUN mkdir -p /var/www/html
 
-# Make sure files/folders needed by the processes are accessable when they run under the www-data user
-RUN chown -R www-data.www-data /run && \
-  chown -R www-data.www-data /var/lib/nginx && \
-  chown -R www-data.www-data /var/tmp/nginx && \
-  chown -R www-data.www-data /var/log && \
-  chown -R www-data.www-data /var/www/html 
+# Make sure files/folders needed by the processes are accessable when they run under the docker user
+RUN chown -R docker.docker /run && \
+  chown -R docker.docker /var/lib/nginx && \
+  chown -R docker.docker /var/tmp/nginx && \
+  chown -R docker.docker /var/log && \
+  chown -R docker.docker /var/www/html 
 
 # Switch to use a non-root user from here on
-USER www-data
+USER docker
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=www-data.www-data ./ /var/www/html 
+COPY --chown=docker.docker ./ /var/www/html 
 
 #set home
 RUN HOME=/var/www/html
 
-RUN chown -R www-data.www-data $HOME/.composer
+RUN chown -R docker.docker $HOME/.composer
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
