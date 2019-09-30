@@ -28,8 +28,7 @@ RUN chown -R nobody.nobody /run && \
   chown -R nobody.nobody /var/lib/nginx && \
   chown -R nobody.nobody /var/tmp/nginx && \
   chown -R nobody.nobody /var/log && \
-  chown -R nobody.nobody /var/www/html && \
-  chown -R /run/nginx
+  chown -R nobody.nobody /var/www/html
 
 # Switch to use a non-root user from here on
 USER nobody
