@@ -8,7 +8,7 @@ RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-cur
     php7-mbstring php7-gd php7-pdo_mysql nginx supervisor curl nano 
 
 # Configure nginx
-#COPY config/nginx.conf /etc/nginx/nginx.conf
+COPY config/nginx.conf /etc/nginx/nginx.conf
 
 COPY config/default.conf /etc/nginx/conf.d/default.conf
 
