@@ -7,7 +7,7 @@ RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-cur
     php7-mcrypt php7-dom php7-simplexml php7-fileinfo php7-tokenizer php7-xmlwriter php7-session \
     php7-mbstring php7-gd php7-pdo_mysql nginx supervisor curl nano \
     libgcc libstdc++ libx11 glib libxrender libxext libintl \
-    ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family
+    ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family gcompat
 
 # Configure nginx
 COPY config/nginx.conf /etc/nginx/nginx.conf
