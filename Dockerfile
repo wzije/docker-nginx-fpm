@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.9
 LABEL maintainer="Jehan<jee.archer@gmail.com>"
 
 # Install packages
